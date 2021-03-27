@@ -29,9 +29,9 @@ if [ "$VIDEO_RESULT" != "h264" ]; then
 fi
 
 if [ "$INPUT" == rtsp://* ]; then
-  IS_RTSP="-rtsp_transport tcp"
+  IS_RTSP="-rtsp_transport tcp -err_detect ignore_err"
 fi
 
-FFMPEG_CMD="ffmpeg ${IS_RTSP} -i ${INPUT} ${LACKING_AUDIO} -acodec ${DEFAULT_AUDIO} -vcodec ${DEFAULT_VIDEO} -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments ${OUTPUT_PATH}${OUTPUT}.m3u8"
+FFMPEG_CMD="ffmpeg ${IS_RTSP} -i ${INPUT} ${LACKING_AUDIO} -acodec ${DEFAULT_AUDIO} -vcodec ${DEFAULT_VIDEO} -movflags +faststart -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments ${OUTPUT_PATH}${OUTPUT}.m3u8"
 
 echo "${FFMPEG_CMD}"
